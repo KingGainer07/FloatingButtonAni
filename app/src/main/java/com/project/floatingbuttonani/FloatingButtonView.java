@@ -266,7 +266,7 @@ public class FloatingButtonView extends LinearLayout implements CoordinatorLayou
     }
 
     /**
-     * Inflate a menu resource into this SpeedDialView. Any existing Action item will be removed.
+     * Inflate a menu resource into this View. Any existing Action item will be removed.
      * <p class="note">Using the Menu resource it is possible to specify only the ID, the icon and the label of the
      * Action item. No color customization is available.</p>
      *
@@ -296,8 +296,8 @@ public class FloatingButtonView extends LinearLayout implements CoordinatorLayou
      */
     public Collection<FabWithLabelView> addAllActionItems(Collection<FloatingButtonActionItem> actionItemCollection) {
         ArrayList<FabWithLabelView> fabWithLabelViews = new ArrayList<>();
-        for (FloatingButtonActionItem speedDialActionItem : actionItemCollection) {
-            fabWithLabelViews.add(addActionItem(speedDialActionItem));
+        for (FloatingButtonActionItem sActionItem : actionItemCollection) {
+            fabWithLabelViews.add(addActionItem(sActionItem));
         }
         return fabWithLabelViews;
     }
@@ -305,12 +305,12 @@ public class FloatingButtonView extends LinearLayout implements CoordinatorLayou
     /**
      * Appends the specified {@link FloatingButtonActionItem} to the end of this list.
      *
-     * @param speedDialActionItem {@link FloatingButtonActionItem} to be appended to this list
+     * @param sActionItem {@link FloatingButtonActionItem} to be appended to this list
      * @return the instance of the {@link FabWithLabelView} if the add was successful, null otherwise.
      */
     @Nullable
-    public FabWithLabelView addActionItem(FloatingButtonActionItem speedDialActionItem) {
-        return addActionItem(speedDialActionItem, mFabWithLabelViews.size());
+    public FabWithLabelView addActionItem(FloatingButtonActionItem sActionItem) {
+        return addActionItem(sActionItem, mFabWithLabelViews.size());
     }
 
     /**
@@ -339,7 +339,7 @@ public class FloatingButtonView extends LinearLayout implements CoordinatorLayou
     public FabWithLabelView addActionItem(FloatingButtonActionItem actionItem, int position, boolean animate) {
         FabWithLabelView oldView = findFabWithLabelViewById(actionItem.getId());
         if (oldView != null) {
-            return replaceActionItem(oldView.getSpeedDialActionItem(), actionItem);
+            return replaceActionItem(oldView.getActionItem(), actionItem);
         } else {
             FabWithLabelView newView = actionItem.createFabWithLabelView(getContext());
             newView.setOrientation(getOrientation() == VERTICAL ? HORIZONTAL : VERTICAL);
@@ -367,9 +367,9 @@ public class FloatingButtonView extends LinearLayout implements CoordinatorLayou
      */
     @Nullable
     public FloatingButtonActionItem removeActionItem(int position) {
-        FloatingButtonActionItem speedDialActionItem = mFabWithLabelViews.get(position).getSpeedDialActionItem();
-        removeActionItem(speedDialActionItem);
-        return speedDialActionItem;
+        FloatingButtonActionItem sActionItem = mFabWithLabelViews.get(position).getActionItem();
+        removeActionItem(sActionItem);
+        return sActionItem;
     }
 
     /**
@@ -408,31 +408,31 @@ public class FloatingButtonView extends LinearLayout implements CoordinatorLayou
      */
     @Nullable
     public FabWithLabelView replaceActionItem(FloatingButtonActionItem newActionItem, int position) {
-        return replaceActionItem(mFabWithLabelViews.get(position).getSpeedDialActionItem(), newActionItem);
+        return replaceActionItem(mFabWithLabelViews.get(position).getActionItem(), newActionItem);
     }
 
     /**
      * Replace an already added {@link FloatingButtonActionItem} with the one provided as parameter.
      *
-     * @param oldSpeedDialActionItem the old {@link FloatingButtonActionItem} to remove
-     * @param newSpeedDialActionItem the new {@link FloatingButtonActionItem} to add
+     * @param oldActionItem the old {@link FloatingButtonActionItem} to remove
+     * @param newActionItem the new {@link FloatingButtonActionItem} to add
      * @return the instance of the new {@link FabWithLabelView} if the replace was successful, null otherwise.
      */
     @Nullable
-    public FabWithLabelView replaceActionItem(@Nullable FloatingButtonActionItem oldSpeedDialActionItem,
-                                                                         FloatingButtonActionItem newSpeedDialActionItem) {
-        if (oldSpeedDialActionItem == null) {
+    public FabWithLabelView replaceActionItem(@Nullable FloatingButtonActionItem oldActionItem,
+                                                                         FloatingButtonActionItem newActionItem) {
+        if (oldActionItem == null) {
             return null;
         } else {
-            FabWithLabelView oldView = findFabWithLabelViewById(oldSpeedDialActionItem.getId());
+            FabWithLabelView oldView = findFabWithLabelViewById(oldActionItem.getId());
             if (oldView != null) {
                 int index = mFabWithLabelViews.indexOf(oldView);
                 if (index < 0) {
                     return null;
                 }
-                removeActionItem(findFabWithLabelViewById(newSpeedDialActionItem.getId()), null, false);
-                removeActionItem(findFabWithLabelViewById(oldSpeedDialActionItem.getId()), null, false);
-                return addActionItem(newSpeedDialActionItem, index, false);
+                removeActionItem(findFabWithLabelViewById(newActionItem.getId()), null, false);
+                removeActionItem(findFabWithLabelViewById(oldActionItem.getId()), null, false);
+                return addActionItem(newActionItem, index, false);
             } else {
                 return null;
             }
@@ -452,11 +452,11 @@ public class FloatingButtonView extends LinearLayout implements CoordinatorLayou
 
     @NonNull
     public ArrayList<FloatingButtonActionItem> getActionItems() {
-        ArrayList<FloatingButtonActionItem> speedDialActionItems = new ArrayList<>(mFabWithLabelViews.size());
+        ArrayList<FloatingButtonActionItem> sActionItems = new ArrayList<>(mFabWithLabelViews.size());
         for (FabWithLabelView fabWithLabelView : mFabWithLabelViews) {
-            speedDialActionItems.add(fabWithLabelView.getSpeedDialActionItem());
+            sActionItems.add(fabWithLabelView.getActionItem());
         }
-        return speedDialActionItems;
+        return sActionItems;
     }
 
     @NonNull
@@ -610,7 +610,7 @@ public class FloatingButtonView extends LinearLayout implements CoordinatorLayou
     @Override
     protected Parcelable onSaveInstanceState() {
         Bundle bundle = new Bundle();
-        mInstanceState.mSpeedDialActionItems = getActionItems();
+        mInstanceState.mActionItems = getActionItems();
         bundle.putParcelable(InstanceState.class.getName(), mInstanceState);
         bundle.putParcelable(STATE_KEY_SUPER, super.onSaveInstanceState());
         return bundle;
@@ -622,8 +622,8 @@ public class FloatingButtonView extends LinearLayout implements CoordinatorLayou
             Bundle bundle = (Bundle) state;
             InstanceState instanceState = bundle.getParcelable(InstanceState.class.getName());
             if (instanceState != null
-                    && instanceState.mSpeedDialActionItems != null
-                    && !instanceState.mSpeedDialActionItems.isEmpty()) {
+                    && instanceState.mActionItems != null
+                    && !instanceState.mActionItems.isEmpty()) {
                 setUseReverseAnimationOnClose(instanceState.mUseReverseAnimationOnClose);
                 setMainFabAnimationRotateAngle(instanceState.mMainFabAnimationRotateAngle);
                 setMainFabOpenedBackgroundColor(instanceState.mMainFabOpenedBackgroundColor);
@@ -631,7 +631,7 @@ public class FloatingButtonView extends LinearLayout implements CoordinatorLayou
                 setMainFabOpenedIconColor(instanceState.mMainFabOpenedIconColor);
                 setMainFabClosedIconColor(instanceState.mMainFabClosedIconColor);
                 setExpansionMode(instanceState.mExpansionMode, true);
-                addAllActionItems(instanceState.mSpeedDialActionItems);
+                addAllActionItems(instanceState.mActionItems);
                 toggle(instanceState.mIsOpen, false);
             }
             state = bundle.getParcelable(STATE_KEY_SUPER);
@@ -658,7 +658,7 @@ public class FloatingButtonView extends LinearLayout implements CoordinatorLayou
                                                       @Nullable Iterator<FabWithLabelView> it,
                                                       boolean animate) {
         if (view != null) {
-            FloatingButtonActionItem speedDialActionItem = view.getSpeedDialActionItem();
+            FloatingButtonActionItem sActionItem = view.getActionItem();
             if (it != null) {
                 it.remove();
             } else {
@@ -677,7 +677,7 @@ public class FloatingButtonView extends LinearLayout implements CoordinatorLayou
             } else {
                 removeView(view);
             }
-            return speedDialActionItem;
+            return sActionItem;
         } else {
             return null;
         }
@@ -1024,7 +1024,7 @@ public class FloatingButtonView extends LinearLayout implements CoordinatorLayou
         private int mExpansionMode = ExpansionMode.TOP;
         private float mMainFabAnimationRotateAngle = DEFAULT_ROTATE_ANGLE;
         private boolean mUseReverseAnimationOnClose = false;
-        private ArrayList<FloatingButtonActionItem> mSpeedDialActionItems = new ArrayList<>();
+        private ArrayList<FloatingButtonActionItem> mActionItems = new ArrayList<>();
 
         @Override
         public int describeContents() {
@@ -1041,7 +1041,7 @@ public class FloatingButtonView extends LinearLayout implements CoordinatorLayou
             dest.writeInt(this.mExpansionMode);
             dest.writeFloat(this.mMainFabAnimationRotateAngle);
             dest.writeByte(this.mUseReverseAnimationOnClose ? (byte) 1 : (byte) 0);
-            dest.writeTypedList(this.mSpeedDialActionItems);
+            dest.writeTypedList(this.mActionItems);
         }
 
         public InstanceState() {
@@ -1056,7 +1056,7 @@ public class FloatingButtonView extends LinearLayout implements CoordinatorLayou
             this.mExpansionMode = in.readInt();
             this.mMainFabAnimationRotateAngle = in.readFloat();
             this.mUseReverseAnimationOnClose = in.readByte() != 0;
-            this.mSpeedDialActionItems = in.createTypedArrayList(FloatingButtonActionItem.CREATOR);
+            this.mActionItems = in.createTypedArrayList(FloatingButtonActionItem.CREATOR);
         }
 
         public static final Creator<InstanceState> CREATOR = new Creator<InstanceState>() {

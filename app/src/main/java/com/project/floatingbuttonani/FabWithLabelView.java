@@ -55,7 +55,7 @@ public class FabWithLabelView extends LinearLayout {
     private CardView mLabelCardView;
     private boolean mIsLabelEnabled;
     @Nullable
-    private FloatingButtonActionItem mSpeedDialActionItem;
+    private FloatingButtonActionItem mActionItem;
     @Nullable
     private OnActionSelectedListener mOnActionSelectedListener;
     @FloatingActionButton.Size
@@ -129,23 +129,23 @@ public class FabWithLabelView extends LinearLayout {
         return mFab;
     }
 
-    public FloatingButtonActionItem getSpeedDialActionItem() {
-        if (mSpeedDialActionItem == null) {
-            throw new IllegalStateException("SpeedDialActionItem not set yet!");
+    public FloatingButtonActionItem getActionItem() {
+        if (mActionItem == null) {
+            throw new IllegalStateException("ActionItem not set yet!");
         }
-        return mSpeedDialActionItem;
+        return mActionItem;
     }
 
     /**
      * Returns an instance of the {@link FloatingButtonActionItem.Builder} initialized with the current instance of the
      * {@link FloatingButtonActionItem} to make it easier to modify the current Action Item settings.
      */
-    public FloatingButtonActionItem.Builder getSpeedDialActionItemBuilder() {
-        return new FloatingButtonActionItem.Builder(getSpeedDialActionItem());
+    public FloatingButtonActionItem.Builder getActionItemBuilder() {
+        return new FloatingButtonActionItem.Builder(getActionItem());
     }
 
-    public void setSpeedDialActionItem(FloatingButtonActionItem actionItem) {
-        mSpeedDialActionItem = actionItem;
+    public void setActionItem(FloatingButtonActionItem actionItem) {
+        mActionItem = actionItem;
         if (actionItem.getFabType().equals(FloatingButtonActionItem.TYPE_FILL)) {
             this.removeView(mFab);
             View view = inflate(getContext(), R.layout.fill_fab, this);
@@ -155,8 +155,8 @@ public class FabWithLabelView extends LinearLayout {
         setId(actionItem.getId());
         setLabel(actionItem.getLabel(getContext()));
         setFabContentDescription(actionItem.getContentDescription(getContext()));
-        FloatingButtonActionItem speedDialActionItem = getSpeedDialActionItem();
-        setLabelClickable(speedDialActionItem != null && speedDialActionItem.isLabelClickable());
+        FloatingButtonActionItem sActionItem = getActionItem();
+        setLabelClickable(sActionItem != null && sActionItem.isLabelClickable());
         setFabIcon(actionItem.getFabImageDrawable(getContext()));
         int imageTintColor = actionItem.getFabImageTintColor();
         if (imageTintColor == RESOURCE_NOT_SET) {
@@ -202,10 +202,10 @@ public class FabWithLabelView extends LinearLayout {
             setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FloatingButtonActionItem speedDialActionItem = getSpeedDialActionItem();
+                    FloatingButtonActionItem sActionItem = getActionItem();
                     if (mOnActionSelectedListener != null
-                            && speedDialActionItem != null) {
-                        if (speedDialActionItem.isLabelClickable()) {
+                            && sActionItem != null) {
+                        if (sActionItem.isLabelClickable()) {
                             UiUtils.performTap(getLabelBackground());
                         } else {
                             UiUtils.performTap(getFab());
@@ -216,10 +216,10 @@ public class FabWithLabelView extends LinearLayout {
             getFab().setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FloatingButtonActionItem speedDialActionItem = getSpeedDialActionItem();
+                    FloatingButtonActionItem sActionItem = getActionItem();
                     if (mOnActionSelectedListener != null
-                            && speedDialActionItem != null) {
-                        mOnActionSelectedListener.onActionSelected(speedDialActionItem);
+                            && sActionItem != null) {
+                        mOnActionSelectedListener.onActionSelected(sActionItem);
                     }
                 }
             });
@@ -227,11 +227,11 @@ public class FabWithLabelView extends LinearLayout {
             getLabelBackground().setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FloatingButtonActionItem speedDialActionItem = getSpeedDialActionItem();
+                    FloatingButtonActionItem sActionItem = getActionItem();
                     if (mOnActionSelectedListener != null
-                            && speedDialActionItem != null
-                            && speedDialActionItem.isLabelClickable()) {
-                        mOnActionSelectedListener.onActionSelected(speedDialActionItem);
+                            && sActionItem != null
+                            && sActionItem.isLabelClickable()) {
+                        mOnActionSelectedListener.onActionSelected(sActionItem);
                     }
                 }
             });
@@ -285,7 +285,7 @@ public class FabWithLabelView extends LinearLayout {
             builder.setLabelBackgroundColor(labelBackgroundColor);
             boolean labelClickable = attr.getBoolean(R.styleable.FabWithLabelView_fabLabelClickable, true);
             builder.setLabelClickable(labelClickable);
-            setSpeedDialActionItem(builder.create());
+            setActionItem(builder.create());
         } catch (Exception e) {
             Log.e(TAG, "Failure setting FabWithLabelView icon", e);
         } finally {

@@ -117,7 +117,7 @@ public class UiUtils {
     }
 
     /**
-     * SpeedDial opening animation.
+     * opening animation.
      *
      * @param view        view that starts that animation.
      * @param startOffset a delay in time to start the animation
@@ -131,7 +131,7 @@ public class UiUtils {
     }
 
     /**
-     * SpeedDial closing animation.
+     * Closing animation.
      *
      * @param view        view that starts that animation.
      * @param startOffset a delay in time to start the animation

@@ -119,7 +119,7 @@ public class FloatingButtonActionItem implements Parcelable {
     /**
      * Gets the current Drawable, or null if no Drawable has been assigned.
      *
-     * @param context A context to retrieve the Drawable from (needed for SpeedDialActionItem.Builder(int, int).
+     * @param context A context to retrieve the Drawable from (needed for ActionItem.Builder(int, int).
      * @return the item drawable, or null if no drawable has been assigned.
      */
     @Nullable
@@ -178,7 +178,7 @@ public class FloatingButtonActionItem implements Parcelable {
         } else {
             fabWithLabelView = new FabWithLabelView(new ContextThemeWrapper(context, theme), null, theme);
         }
-        fabWithLabelView.setSpeedDialActionItem(this);
+        fabWithLabelView.setActionItem(this);
         return fabWithLabelView;
     }
 
@@ -251,25 +251,25 @@ public class FloatingButtonActionItem implements Parcelable {
          * Creates a builder for a action item that uses a {@link FloatingButtonActionItem} instance to
          * initialize the default values.
          *
-         * @param speedDialActionItem it will be used for the default values of the builder.
+         * @param sActionItem it will be used for the default values of the builder.
          */
-        public Builder(FloatingButtonActionItem speedDialActionItem) {
-            mId = speedDialActionItem.mId;
-            mLabel = speedDialActionItem.mLabel;
-            mLabelRes = speedDialActionItem.mLabelRes;
-            mContentDescription = speedDialActionItem.mContentDescription;
-            mContentDescriptionRes = speedDialActionItem.mContentDescriptionRes;
-            mFabImageResource = speedDialActionItem.mFabImageResource;
-            mFabImageDrawable = speedDialActionItem.mFabImageDrawable;
-            mFabImageTintColor = speedDialActionItem.mFabImageTintColor;
-            mFabImageTint = speedDialActionItem.mFabImageTint;
-            mFabType = speedDialActionItem.mFabType;
-            mFabBackgroundColor = speedDialActionItem.mFabBackgroundColor;
-            mLabelColor = speedDialActionItem.mLabelColor;
-            mLabelBackgroundColor = speedDialActionItem.mLabelBackgroundColor;
-            mLabelClickable = speedDialActionItem.mLabelClickable;
-            mFabSize = speedDialActionItem.mFabSize;
-            mTheme = speedDialActionItem.mTheme;
+        public Builder(FloatingButtonActionItem sActionItem) {
+            mId = sActionItem.mId;
+            mLabel = sActionItem.mLabel;
+            mLabelRes = sActionItem.mLabelRes;
+            mContentDescription = sActionItem.mContentDescription;
+            mContentDescriptionRes = sActionItem.mContentDescriptionRes;
+            mFabImageResource = sActionItem.mFabImageResource;
+            mFabImageDrawable = sActionItem.mFabImageDrawable;
+            mFabImageTintColor = sActionItem.mFabImageTintColor;
+            mFabImageTint = sActionItem.mFabImageTint;
+            mFabType = sActionItem.mFabType;
+            mFabBackgroundColor = sActionItem.mFabBackgroundColor;
+            mLabelColor = sActionItem.mLabelColor;
+            mLabelBackgroundColor = sActionItem.mLabelBackgroundColor;
+            mLabelClickable = sActionItem.mLabelClickable;
+            mFabSize = sActionItem.mFabSize;
+            mTheme = sActionItem.mTheme;
         }
 
         public Builder setLabel(@Nullable String label) {
@@ -309,9 +309,9 @@ public class FloatingButtonActionItem implements Parcelable {
         }
 
         /**
-         * set SpeedDialActionItem size.
-         * SpeedDialActionItem.TYPE_NORMAL Use normal Fab.
-         * SpeedDialActionItem.TYPE_FILL Set Floating Action Button image to fill the button.
+         * set ActionItem size.
+         * ActionItem.TYPE_NORMAL Use normal Fab.
+         * ActionItem.TYPE_FILL Set Floating Action Button image to fill the button.
          */
         public Builder setFabType(@FabType String fabType) {
             mFabType = fabType;
