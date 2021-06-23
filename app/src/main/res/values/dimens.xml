@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <dimen name="close_elevation">5dp</dimen>
+    <dimen name="fab_mini_size">54dp</dimen>
+    <dimen name="fab_normal_size">72dp</dimen>
+    <dimen name="fab_side_margin">12dp</dimen>|
+    <dimen name="label_max_width">160dp</dimen>
+    <dimen name="open_elevation">8dp</dimen>
+    <dimen name="overlay_elevation">@dimen/close_elevation</dimen>
+</resources>
